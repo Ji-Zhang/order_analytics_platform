@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 from app.query_runner import get_query_result
+from app.export import export_to_csv
 
 def read_query_from_file(file_path):
     """Reads the SQL query from a file."""
@@ -20,6 +21,9 @@ def main():
     
     # Add the query argument
     parser.add_argument('query', help="SQL query to run or path to SQL script file")
+
+    # Add the --export flag to enable exporting the results to CSV
+    parser.add_argument('--export', help="Export query results to CSV", action='store_true')
     
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -35,7 +39,7 @@ def main():
     # Run the query
     print(f"Running query: {query}")
     try:
-        query_result = get_query_result(query)
+        colnames, query_result = get_query_result(query)
         if query_result:
             print(f"Query executed successfully.")
         else:
@@ -43,6 +47,16 @@ def main():
     except Exception as e:
         print(f"Error while running query: {e}")
         sys.exit(1)
+
+    # Export results to CSV if --export flag is provided
+    if args.export:
+        print("Exporting results to CSV...")
+        try:
+            export_to_csv(colnames, query_result)
+            print("Export completed successfully.")
+        except Exception as e:
+            print(f"Error while exporting to CSV: {e}")
+            sys.exit(1)
 
 if __name__ == '__main__':
     main()

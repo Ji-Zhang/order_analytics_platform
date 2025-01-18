@@ -17,7 +17,8 @@ def run_query(query):
     connection = connect_to_db()
     cursor = connection.cursor()
     cursor.execute(query)
+    colnames = cursor.description
     result = cursor.fetchall()
     cursor.close()
     connection.close()
-    return result
+    return colnames, result
