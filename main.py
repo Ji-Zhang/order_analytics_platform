@@ -24,6 +24,9 @@ def main():
 
     # Add the --export flag to enable exporting the results to CSV
     parser.add_argument('--export', help="Export query results to CSV", action='store_true')
+
+    # Add the --export-path argument for customizing export path
+    parser.add_argument('--export-path', type=str, help="Path to save the exported file.")
     
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -42,6 +45,8 @@ def main():
         colnames, query_result = get_query_result(query)
         if query_result:
             print(f"Query executed successfully.")
+            print(colnames)
+            print(query_result)
         else:
             print("No data returned.")
     except Exception as e:
@@ -52,8 +57,10 @@ def main():
     if args.export:
         print("Exporting results to CSV...")
         try:
-            export_to_csv(colnames, query_result)
-            print("Export completed successfully.")
+            # Use provided export path or a default value
+            export_path = args.export_path if args.export_path else "output.csv"
+            export_to_csv(colnames, query_result, export_path)
+            print(f"Export completed successfully. File saved to: {export_path}")
         except Exception as e:
             print(f"Error while exporting to CSV: {e}")
             sys.exit(1)
