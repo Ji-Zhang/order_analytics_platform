@@ -1,4 +1,4 @@
-from app.db import run_query
+from db import run_query
 
 def get_query_result(query):
     """

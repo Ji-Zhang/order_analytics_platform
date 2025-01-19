@@ -1,8 +1,8 @@
 import argparse
 import sys
 import os
-from app.query_runner import get_query_result
-from app.export import export_to_csv
+from query_runner import get_query_result
+from export import export_to_csv
 
 def read_query_from_file(file_path):
     """Reads the SQL query from a file."""

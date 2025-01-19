@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/application/Dockerfile
+    volumes:
+      - ./app:/app  # Mount the current directory to /app in the container
+    environment:
+      - DB_HOST=transactions-db
+      - DB_PORT=5432
+      - DB_USER=finance_db_user
+      - DB_PASSWORD=1234
+      - DB_NAME=finance_db
+    depends_on:
+      - transactions-db
+    command: ["--export", "--export-path", "/app/output.csv", "queries/query_open_orders.sql"]  # Example args to pass
+
+  transactions-db:
+    build:
+      context: ./docker/postgres-db
+    environment:
+      - POSTGRES_USER=finance_db_user
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=finance_db
+    volumes:
+        - "postgres_data:/var/lib/postgresql/data"
+        - "${PWD}/db-scripts/initialize_db_ddl.sql:/docker-entrypoint-initdb.d/initialize_db_ddl.sql"
+    ports:
+      - "5432:5432"
+    command: ["postgres", "-c", "wal_level=logical", "-c", "hot_standby=on"]
+
+volumes:
+  postgres_data:  # Define named volume
