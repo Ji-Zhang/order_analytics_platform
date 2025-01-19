@@ -20,7 +20,7 @@ order_analytics_platform/
 │   └── requirements.txt # Python dependencies
 ├── db-scripts/          # Scripts for setting up the database
 ├── docker/              # Docker-related files
-│   ├──application/      # Dockerfile for the app
+│   ├── application/      # Dockerfile for the app
 │   ├── postgres-db/     # Dockerfile for the database
 ├──  docker-compose.yml  # Docker Compose configuration
 └── README.md            # Documentation
