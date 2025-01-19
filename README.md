@@ -10,13 +10,20 @@ This guide provides instructions on how to set up the application and run analyt
 ## Folder Structure
 ```
 order_analytics_platform/
-|-- app/                # Application source code
-|   | -- queries/       # SQL query files
-|-- db-scripts/         # Scripts for setting up the database
-|-- docker/             # Docker-related files
-|   |-- application/    # Dockerfile for the app
-|   |-- postgres-db/    # Dockerfile for the database
-|-- docker-compose.yml  # Docker Compose configuration
+├── app/                 # Application source code
+│   ├── queries/         # SQL query files
+│   ├── config.py        # Database configuration
+│   ├── db.py            # Database connection utilities
+│   ├── export.py        # CSV export utilities
+│   ├── query_runner.py  # Query execution logic
+│   ├── main.py          # Entry point for the application
+│   └── requirements.txt # Python dependencies
+├── db-scripts/          # Scripts for setting up the database
+├── docker/              # Docker-related files
+│   ├──application/      # Dockerfile for the app
+│   ├── postgres-db/     # Dockerfile for the database
+├──  docker-compose.yml  # Docker Compose configuration
+└── README.md            # Documentation
 ```
 
 ## Analytics Queries
@@ -54,3 +61,16 @@ For example
 ### Step 4: Clean Up
 Stop and remove containers:
 > docker compose down
+
+
+## Future Enhancements:
+### Tests
+* Implement units tests for the application logic
+* Include data tests for validating queries
+### Automated code formatter
+* Add CI pipeline to automate code quality check, code formatting etc..
+### Change Data Capture
+* Add functionality to track and store the query history to the database
+### Container Communication
+* Currently both app and database containers are spinned up simultaneously through `docker compose`. It would be more logical to spin them up seperately while allow commnucation with each other.
+
