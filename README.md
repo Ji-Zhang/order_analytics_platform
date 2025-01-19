@@ -37,7 +37,7 @@ The following analytics queries (app/quries/) have been prepared for convenience
 ### 1. Clone the Repository
 > git clone <repo_url>
  
-### 2. Start the application and database
+### 2. Start the Application and Database
 
 Once you have [Docker](https://www.docker.com/products/docker-desktop/) and [docker-compose](https://docs.docker.com/compose/install/) configured in your computer, with your Docker engine running, you must execute the following command:
    > docker-compose up
